@@ -1,0 +1,28 @@
+.container{
+    height: 100%;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.header{
+    margin-bottom: auto;
+    font-family: 'Staatliches', cursive;
+    text-align: center;
+}
+
+.footer{
+    margin-top: auto;
+}
+
+.right-rotated {
+    transform: rotate(45deg); /* Equal to rotateZ(45deg) */
+  }
+
+.left-rotated{
+    transform: rotate(-45deg); /* Equal to rotateZ(45deg) */
+}
+
+.guess-container{
+    min-height: 350px;
+}

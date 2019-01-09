@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="bulls_and_cows.css">
+    <link rel="stylesheet" type="text/css" href="../../node_modules/tachyons/css/tachyons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Staatliches" rel="stylesheet">
+
+    <title> Bulls and Cows </title>
+
+</head>
+
+<body class="bg-light-gray near-black">
+    <div class="container pa3 flex flex-column justify-center items-center">
+
+        <div class="header">
+            <img src="bull.png" class="left-rotated mh3" alt="Bull" height="90px">
+            <img src="cow.jpg" class="right-rotated mh3" alt="Cow" height="80px">
+            <div class="f2 mv2">BULLS & COWS</div>
+        </div>
+
+        <div class="mv2 flex flex-row w-100">
+            <input id="userInput" class="pa2" style="flex-grow: 1;" type="text" placeholder="Enter your guess here">
+            <a onclick="submitGuess()" class="ml-auto no-underline near-white bg-animate bg-near-black inline-flex items-center tc br2 pa2"
+                title="Submit Input">
+                <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDMxLjQ5IDMxLjQ5IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMS40OSAzMS40OTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIzMnB4IiBoZWlnaHQ9IjMycHgiPgo8cGF0aCBkPSJNMjEuMjA1LDUuMDA3Yy0wLjQyOS0wLjQ0NC0xLjE0My0wLjQ0NC0xLjU4NywwYy0wLjQyOSwwLjQyOS0wLjQyOSwxLjE0MywwLDEuNTcxbDguMDQ3LDguMDQ3SDEuMTExICBDMC40OTIsMTQuNjI2LDAsMTUuMTE4LDAsMTUuNzM3YzAsMC42MTksMC40OTIsMS4xMjcsMS4xMTEsMS4xMjdoMjYuNTU0bC04LjA0Nyw4LjAzMmMtMC40MjksMC40NDQtMC40MjksMS4xNTksMCwxLjU4NyAgYzAuNDQ0LDAuNDQ0LDEuMTU5LDAuNDQ0LDEuNTg3LDBsOS45NTItOS45NTJjMC40NDQtMC40MjksMC40NDQtMS4xNDMsMC0xLjU3MUwyMS4yMDUsNS4wMDd6IiBmaWxsPSIjRkZGRkZGIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
+            </a>
+        </div>
+
+        <div class="guess-container pa2 mv2 bg-dark-gray light-gray w-100 pa2 tc">
+            
+        </div>
+
+        <div class="footer">
+            <h4>RULES:</h4>
+            <p>[1]: The word has to be an Isogram i.e no repeating letters</p>
+            <p>[2]: Number of bulls tells you how many <strong> CORRECT </strong> letters are <strong> IN </strong> their place</p>
+            <p>[3]: Number of cows tells you how many <strong> CORRECT </strong> letters are <strong> NOT IN </strong> their place</p>
+            <p>[4]: The word is the name of a country</p>
+        </div>
+    </div>
+    <script src="bulls_and_cows.js"></script>
+</body>
+
+</html>
