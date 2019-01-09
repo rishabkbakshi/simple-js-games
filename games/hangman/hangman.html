@@ -10,22 +10,28 @@
 
 </head>
 
-<body class=" bg-dark-gray near-white">
+<body class="bg-dark-gray near-white">
 
     <div class="body-container flex flex-column justify-center items-center ph3 bg-light-gray dark-gray">
         <div style="margin-bottom: auto;" class="pa3 ma3 bg-light-gray dark-gray tc w-100">
-             <div class="f2"><strong>Hangman</strong    ></div>
-             <span class="f6">(Guess the country names!)</span>
+            <div class="f2"><strong>Hangman</strong></div>
+            <span class="f6">(Guess the country names!)</span>
         </div>
-        
+
         <div id="letterBox" class="mh3">
 
         </div>
 
         <div class="flex flex-row justify-center items-center mv3 ph2 w-100">
-            <input id="userInput" style="flex-grow: 1;" class="mr3 pv3 ph3" type="text" placeholder="Enter a letter here" onchange=onUserInput(event)>
+            <input id="userInput" style="flex-grow: 1;" class="mr2 pv3 ph3" type="text" placeholder="Enter a letter here">
             <!-- <button type="button" class="w-50" style="height:40px;">Start New</button> -->
-            <a onclick="startNewGame()" class="ml-auto no-underline near-white bg-animate bg-near-black inline-flex items-center ma2 tc br2 pa2" title="New Game">
+
+            <a onclick="onUserInput(event)" class="ml-auto no-underline near-white bg-animate bg-near-black inline-flex items-center ma2 tc br2 pa2"
+                title="Submit Input">
+                <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDMxLjQ5IDMxLjQ5IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMS40OSAzMS40OTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIzMnB4IiBoZWlnaHQ9IjMycHgiPgo8cGF0aCBkPSJNMjEuMjA1LDUuMDA3Yy0wLjQyOS0wLjQ0NC0xLjE0My0wLjQ0NC0xLjU4NywwYy0wLjQyOSwwLjQyOS0wLjQyOSwxLjE0MywwLDEuNTcxbDguMDQ3LDguMDQ3SDEuMTExICBDMC40OTIsMTQuNjI2LDAsMTUuMTE4LDAsMTUuNzM3YzAsMC42MTksMC40OTIsMS4xMjcsMS4xMTEsMS4xMjdoMjYuNTU0bC04LjA0Nyw4LjAzMmMtMC40MjksMC40NDQtMC40MjksMS4xNTksMCwxLjU4NyAgYzAuNDQ0LDAuNDQ0LDEuMTU5LDAuNDQ0LDEuNTg3LDBsOS45NTItOS45NTJjMC40NDQtMC40MjksMC40NDQtMS4xNDMsMC0xLjU3MUwyMS4yMDUsNS4wMDd6IiBmaWxsPSIjRkZGRkZGIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
+            </a>
+            <a onclick="startNewGame()" class="ml-auto no-underline near-white bg-animate bg-near-black inline-flex items-center ma2 tc br2 pa2"
+                title="New Game">
                 <!-- <span class="f5 ml3 pr2">NEW</span> -->
                 <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCIgdmlld0JveD0iMCAwIDQ4Ny4yMyA0ODcuMjMiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ4Ny4yMyA0ODcuMjM7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTUuMzIzLDIwMy42NDFjMTUuNjY0LDAsMjkuODEzLTkuNDA1LDM1Ljg3Mi0yMy44NTRjMjUuMDE3LTU5LjYwNCw4My44NDItMTAxLjYxLDE1Mi40Mi0xMDEuNjEgICAgYzM3Ljc5NywwLDcyLjQ0OSwxMi45NTUsMTAwLjIzLDM0LjQ0MmwtMjEuNzc1LDMuMzcxYy03LjQzOCwxLjE1My0xMy4yMjQsNy4wNTQtMTQuMjMyLDE0LjUxMiAgICBjLTEuMDEsNy40NTQsMy4wMDgsMTQuNjg2LDkuODY3LDE3Ljc2OGwxMTkuNzQ2LDUzLjg3MmM1LjI0OSwyLjM1NywxMS4zMywxLjkwNCwxNi4xNjgtMS4yMDUgICAgYzQuODMtMy4xMTQsNy43NjQtOC40NTgsNy43OTYtMTQuMjA4bDAuNjIxLTEzMS45NDNjMC4wNDItNy41MDYtNC44NTEtMTQuMTQ0LTEyLjAyNC0xNi4zMzIgICAgYy03LjE4NS0yLjE4OC0xNC45NDcsMC41ODktMTkuMTA0LDYuODM3bC0xNi41MDUsMjQuODA1QzM3MC4zOTgsMjYuNzc4LDMxMC4xLDAsMjQzLjYxNSwwQzE0Mi44MDYsMCw1Ni4xMzMsNjEuNTYyLDE5LjE2NywxNDkuMDYgICAgYy01LjEzNCwxMi4xMjgtMy44NCwyNi4wMTUsMy40MjksMzYuOTg3QzI5Ljg2NSwxOTcuMDIzLDQyLjE1MiwyMDMuNjQxLDU1LjMyMywyMDMuNjQxeiIgZmlsbD0iI0ZGRkZGRiIvPgoJCTxwYXRoIGQ9Ik00NjQuNjM1LDMwMS4xODRjLTcuMjctMTAuOTc3LTE5LjU1OC0xNy41OTQtMzIuNzI4LTE3LjU5NGMtMTUuNjY0LDAtMjkuODEzLDkuNDA1LTM1Ljg3MiwyMy44NTQgICAgYy0yNS4wMTgsNTkuNjA0LTgzLjg0MywxMDEuNjEtMTUyLjQyLDEwMS42MWMtMzcuNzk4LDAtNzIuNDUtMTIuOTU1LTEwMC4yMzItMzQuNDQybDIxLjc3Ni0zLjM2OSAgICBjNy40MzctMS4xNTMsMTMuMjIzLTcuMDU1LDE0LjIzMy0xNC41MTRjMS4wMDktNy40NTMtMy4wMDgtMTQuNjg2LTkuODY3LTE3Ljc2OEw0OS43NzksMjg1LjA4OSAgICBjLTUuMjUtMi4zNTYtMTEuMzMtMS45MDUtMTYuMTY5LDEuMjA1Yy00LjgyOSwzLjExNC03Ljc2NCw4LjQ1OC03Ljc5NSwxNC4yMDdsLTAuNjIyLDEzMS45NDMgICAgYy0wLjA0Miw3LjUwNiw0Ljg1LDE0LjE0NCwxMi4wMjQsMTYuMzMyYzcuMTg1LDIuMTg4LDE0Ljk0OC0wLjU5LDE5LjEwNC02LjgzOWwxNi41MDUtMjQuODA1ICAgIGM0NC4wMDQsNDMuMzIsMTA0LjMwMyw3MC4wOTgsMTcwLjc4OCw3MC4wOThjMTAwLjgxMSwwLDE4Ny40ODEtNjEuNTYxLDIyNC40NDYtMTQ5LjA1OSAgICBDNDczLjE5NywzMjYuMDQzLDQ3MS45MDMsMzEyLjE1Nyw0NjQuNjM1LDMwMS4xODR6IiBmaWxsPSIjRkZGRkZGIi8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" />
             </a>
