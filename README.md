@@ -1,4 +1,5 @@
 # simple-js-games
 
-Simple Word games implemented in JS on Node Terminal:
+Simple Word games implemented in Vanilla JS
 
+Wanna play? Go here: https://smartword.herokuapp.com/
