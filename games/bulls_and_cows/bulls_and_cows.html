@@ -9,21 +9,29 @@
     <link rel="stylesheet" type="text/css" href="bulls_and_cows.css">
     <link rel="stylesheet" type="text/css" href="../../node_modules/tachyons/css/tachyons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Staatliches" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
     <title> Bulls and Cows </title>
 
 </head>
 
 <body class="bg-light-gray near-black">
+
     <div class="container pa3 flex flex-column justify-center items-center">
-
-        <div class="header">
-            <img src="bull.png" class="left-rotated mh3" alt="Bull" height="90px">
-            <img src="cow.jpg" class="right-rotated mh3" alt="Cow" height="80px">
-            <div class="f2 mv2">BULLS & COWS</div>
+        <div class="header flex flex-row w-100 mh2 justify-center items-center">
+            <a href="../../index.html" class="pointer mr-auto pv3"> <img height="30px" width="30px" src="../../back.png"
+                    alt="Back to Home">
+            </a>
+            <div class="header-title">
+                <div class="f2">BULLS & COWS</div>
+            </div>
+            <div class="ml-auto"></div>
         </div>
-
-        <div class="mv2 flex flex-row w-100">
+        <div>
+            <img src="bull.png" class="left-rotated mh3" alt="Bull" height="50px">
+            <img src="cow.jpg" class="right-rotated mh3" alt="Cow" height="45px">
+        </div>
+        <div class="mv2 flex flex-row w-100 shadow-5">
             <input id="userInput" class="pa2" style="flex-grow: 1;" type="text" placeholder="Enter your guess here">
             <a onclick="submitGuess()" class="ml-auto no-underline near-white bg-animate bg-near-black inline-flex items-center tc br2 pa2"
                 title="Submit Input">
@@ -32,14 +40,16 @@
         </div>
 
         <div class="guess-container pa2 mv2 bg-dark-gray light-gray w-100 pa2 tc">
-            
+
         </div>
 
         <div class="footer">
             <h4>RULES:</h4>
             <p>[1]: The word has to be an Isogram i.e no repeating letters</p>
-            <p>[2]: Number of bulls tells you how many <strong> CORRECT </strong> letters are <strong> IN </strong> their place</p>
-            <p>[3]: Number of cows tells you how many <strong> CORRECT </strong> letters are <strong> NOT IN </strong> their place</p>
+            <p>[2]: Number of bulls tells you how many <strong> CORRECT </strong> letters are <strong> IN </strong>
+                their place</p>
+            <p>[3]: Number of cows tells you how many <strong> CORRECT </strong> letters are <strong> NOT IN </strong>
+                their place</p>
             <p>[4]: The word is the name of a country</p>
         </div>
     </div>

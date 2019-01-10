@@ -1,0 +1,20 @@
+html, body{
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Lato', sans-serif;
+}
+
+.header{
+    margin-bottom: auto;
+    font-family: 'Staatliches', cursive;
+}
+
+.footer{
+    margin-top: auto;
+    border-top: 1px solid gray;
+}
+
+.card-header{
+    font-weight: 100;
+    font-family: 'Staatliches', cursive;
+}

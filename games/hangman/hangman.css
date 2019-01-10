@@ -1,12 +1,27 @@
-body{
+html, body{
     height: 100vh;
     width: 100vw;
+    font-family: 'Lato', sans-serif;
+}
+
+.header{
+    margin-bottom: auto;
+}
+
+.header-title{
+    font-family: 'Staatliches', cursive;
 }
 
 .body-container{
     margin: 0 auto;
     max-width: 500px;
     height: 100%;
+}
+
+#userInput{
+    padding: 10px 5px;
+    margin-right: 2px;
+    border: solid 1.5px gray;
 }
 
 #letterBox{
