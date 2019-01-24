@@ -34,24 +34,6 @@ const submitGuess = () => {
     userInput.focus();
 }
 
-
-// const displayGameIntro = () => {
-//     console.log("\n\nWelcome to Bulls and Cows, a fun word game.\n");
-//     console.log("          }   {         ___  \n");
-//     console.log("          (o o)        (o o)  \n");
-//     console.log("   /-------\\ /          \\ /-------\\ \n");
-//     console.log("  / | BULL |O            O| COW  | \\  \n");
-//     console.log(" *  |-,--- |              |------|  *  \n");
-//     console.log("    ^      ^              ^      ^ \n\n");
-//     console.log(`You have to guess the ISOGRAM I am thinking of! You have ${GAME_VALUES.max_tries} total tries to get the right word \n`)
-//     console.log("[HINTS]:\n");
-//     console.log(`[1]: There are ${GAME_VALUES.actual_answer.length} letters in the word`);
-//     console.log(`[2]: Number of bulls tells you how many correct letters are in their place`);
-//     console.log(`[3]: Number of cows tells you how many correct letters are not in their place`);
-//     console.log(`[4]: The word is something you may find in your bedroom \n\n`);
-//     console.log(`[INFO]: Enter "exit" at any point to quit the game \n\n`);
-// };
-
 const lettersOnlyCheck = (textInput) => {
     let lettersRegex = /^[A-Za-z]+$/;
     if (textInput.match(lettersRegex)) {
@@ -91,8 +73,8 @@ const validateUserInput = (userInput) => {
 
 const resetGame = () => {
     GAME_VALUES.current_try = 0;
-    document.querySelector('.guess-container').innerHTML = "<p>A new game has begun!<p> <p>Enter your first guess:</p> <p>Scroll down for Game Rules</p>";
     generateAnswer();
+    document.querySelector('.guess-container').innerHTML = `<p>A new game has begun!<p><p>(The answer has ${GAME_VALUES.actual_answer.length} letters) </p> <p>Scroll down for Game Rules</p>`;
 }
 
 const calculateBullsAndCows = (inputWord) => {
