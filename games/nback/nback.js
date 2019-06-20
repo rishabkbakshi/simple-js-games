@@ -6,7 +6,7 @@ const startButton = document.getElementById("startNewGame");
 const stopButton = document.getElementById("stopGame");
 
 let maxTurns = 20
-let nbackValue = 1
+let nbackValue = 2
 let memoryCounter = []
 let userChoices = []
 let userSquareNum = 0
@@ -111,6 +111,7 @@ function stopGame(){
 
     alertBox.innerHTML += "<h3> GAME OVER </h3>" + `Your final Score: ${userGameScore}`;
     console.log(`Game Over. User Score is ${userGameScore}`);
+    alertBox.scrollTop = alertBox.scrollHeight;
 
     startButton.disabled = false;
     stopButton.disabled = true;
