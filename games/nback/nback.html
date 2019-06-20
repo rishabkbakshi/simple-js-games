@@ -15,7 +15,9 @@
 <body class="bg-dark-gray near-white">
 
     <div class="grid-container tc mv4">
-
+        <a href="../../index.html" class="pointer mr-auto pv3"> <img height="30px" width="30px" src="../../back.png"
+                alt="Back to Home">
+        </a>
         <div class="page-title">
             <h1> N-BACK TEST </h1>
             <!-- <h5>How good is your memory?</h5> -->
@@ -23,10 +25,10 @@
 
         <div class="nback-selection mv3" onchange="setNbackValue()">
             <select id="nbackSelect">
-                <option value="1">One Back</option>
-                <option value="2">Two Back</option>
-                <option value="3">Three Back</option>
-                <option value="4">Four Back</option>
+                <option value="1">N=1</option>
+                <option value="2">N=2</option>
+                <option value="3">N=3</option>
+                <option value="4">N=4</option>
             </select>
             <p> (Choose 'N' above)</p>
         </div>
@@ -47,12 +49,12 @@
 
         </div>
 
-        <div class="game-controls">
-            <button id="startNewGame" class="mh3" onclick="startNewGame()" disabled=""> START GAME</button>
-            <button id="stopGame" class="mh3" onclick="stopGame()"> STOP GAME</button>
+        <div class="game-controls mv4">
+            <button id="startNewGame" class="mh2" onclick="startNewGame()" disabled=""> START GAME</button>
+            <button id="stopGame" class="mh2" onclick="stopGame()"> STOP GAME</button>
         </div>
 
-        <div class="container-bottom mv3"> Made by Rishab Bakshi </div>
+        <!-- <div class="container-bottom mv3"> Made by Rishab Bakshi </div> -->
     </div>
     <script src="nback.js">
     </script>

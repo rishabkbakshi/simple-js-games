@@ -133,7 +133,9 @@ function setNbackValue(){
 
 
 function initialize(){
-    alertBox.innerHTML += "<h3> CHOOSE 'N' AND START PLAYING </h3>" + `Instructions: <br> Press the 'Y' (yes) key when the box currently highlighted is what you saw 'N' rounds ago. `;
+    alertBox.innerHTML += "<h3> CHOOSE 'N' AND START PLAYING </h3>" + `Instructions: <br>
+     <h5> Press the 'Y' (yes) key when the box currently highlighted is what you saw 'N' rounds ago. <h5>
+     (You get 20 rounds total)`;
 }
 
 initialize()
