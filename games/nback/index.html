@@ -14,22 +14,48 @@
 
 <body class="bg-dark-gray near-white">
 
-    <div class="grid-container">
+    <div class="grid-container tc mv4">
+
+        <div class="page-title">
+            <h1> N-BACK TEST </h1>
+            <!-- <h5>How good is your memory?</h5> -->
+        </div>
+
+        <div class="nback-selection mv3" onchange="setNbackValue()">
+            <select id="nbackSelect">
+                <option value="1">One Back</option>
+                <option value="2">Two Back</option>
+                <option value="3">Three Back</option>
+                <option value="4">Four Back</option>
+            </select>
+            <p> (Choose 'N' above)</p>
+        </div>
 
         <div class="grid">
-            <div id="cell-1" class="cell grow"></div>
-            <div id="cell-2" class="cell grow"></div>
-            <div id="cell-3" class="cell grow"></div>
-            <div id="cell-4" class="cell grow"></div>
-            <div id="cell-5" class="cell grow"></div>
-            <div id="cell-6" class="cell grow"></div>
-            <div id="cell-7" class="cell grow"></div>
-            <div id="cell-8" class="cell grow"></div>
-            <div id="cell-9" class="cell grow"></div>
+            <div id="cell-1" class="cell"></div>
+            <div id="cell-2" class="cell"></div>
+            <div id="cell-3" class="cell"></div>
+            <div id="cell-4" class="cell"></div>
+            <div id="cell-5" class="cell"></div>
+            <div id="cell-6" class="cell"></div>
+            <div id="cell-7" class="cell"></div>
+            <div id="cell-8" class="cell"></div>
+            <div id="cell-9" class="cell"></div>
         </div>
-    </div>
 
-    <script src="nback.js"></script>
+        <div id="alertBox" class="bg-light-gray dark-gray mv3 pa3">
+
+        </div>
+
+        <div class="game-controls">
+            <button id="startNewGame" class="mh3" onclick="startNewGame()" disabled=""> START GAME</button>
+            <button id="stopGame" class="mh3" onclick="stopGame()"> STOP GAME</button>
+        </div>
+
+        <div class="container-bottom mv3"> Made by Rishab Bakshi </div>
+    </div>
+    <script src="nback.js">
+    </script>
 </body>
 
 </html>
