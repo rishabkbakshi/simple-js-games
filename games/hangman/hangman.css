@@ -4,12 +4,16 @@ html, body{
     font-family: 'Lato', sans-serif;
 }
 
-.header{
-    margin-bottom: auto;
-}
+.navbar{
+    background: rgba(0,0,0,0.1);
+    padding: 15px 10px;
+    top: 0;
+    width: 100vw;
+  }
 
 .header-title{
     font-family: 'Staatliches', cursive;
+    text-align: center;
 }
 
 .body-container{

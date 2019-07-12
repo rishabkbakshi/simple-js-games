@@ -1,24 +1,26 @@
-/* html, body{
+html, body{
     height: 100vh;
     width: 100vw;
     font-family: 'Lato', sans-serif;
-} */
+}
+
+.navbar{
+    background: rgba(0,0,0,0.8);
+    padding: 15px 10px;
+    top: 0;
+    width: 100vw;
+  }
 
 .container{
-    height: 100%;
+    /* height: 100%; */
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
 }
 
-.header{
-    margin-bottom: auto;
+.header-title{
     font-family: 'Staatliches', cursive;
     text-align: center;
-}
-
-.header-title{
-    margin-left: -15px;
 }
 
 .footer{

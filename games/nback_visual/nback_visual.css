@@ -1,0 +1,85 @@
+html, body{
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Lato', sans-serif;
+}
+
+.navbar{
+  background: rgba(0,0,0,0.1);
+  padding: 10px 10px; 
+  top: 0;
+  width: 100vw;
+}
+
+.header-title{
+  font-family: 'Staatliches', cursive;
+  text-align: center;
+}
+
+.grid-container{
+    margin: 0 auto;
+    height: 100vh;
+    width: 80vw;
+    min-width: 150px;
+    max-width: 500px;
+    justify-content: center;
+    align-items: center;
+}
+
+#alertBox{
+    width: 100%;
+    height: 200px;
+    overflow-y: auto;
+}
+
+.page-title{
+    margin-bottom: auto;
+}
+
+.grid {
+    display: flex;                       /* establish flex container */
+    flex-wrap: wrap;                     /* enable flex items to wrap */
+    justify-content: space-around;
+    /* width: 80vw;
+    min-width: 150px;
+    max-width: 500px; */
+    margin: 0 auto; 
+}
+
+  .cell {
+    flex: 0 0 32%;                       /* don't grow, don't shrink, width */
+    /* min-height: auto; */
+    max-height: auto;
+    min-height: 100px;
+    margin-bottom: 5px;
+    background-color: #999;
+  }
+
+  .highlighted{
+      background: #f79d00;
+      border-style: outset;
+      animation: createBox .25s;
+  }
+  
+
+.success{
+    background: #64f38c !important;
+}
+.fail{
+    background: #f85032 !important;
+}
+
+  @keyframes createBox {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .nback-selection select{
+    width: 80vw;
+    min-width: 150px;
+    max-width: 200px;
+  }
