@@ -1,84 +1,68 @@
-const maxNum = 9; // No of squares in grid
+const maxNum = 9; // Maximum number to count until
 const highlightColor = "#f00";  // Color of the highlighted square
 const showTimeoutVal = 2500; // In milliseconds
 const alertBox = document.getElementById("alertBox");
 const startButton = document.getElementById("startNewGame");
 const stopButton = document.getElementById("stopGame");
+const recallButton = document.getElementById("recallButton");
 const numberDisplay = document.getElementById("numberDisplay");
 
-let maxRounds = 20
-let currentRound = 0
+const maxRounds = 20
+let currentRound = 1
 let nbackValue = 2
 let memoryCounter = []
 let userChoices = []
 let userSelectNum = 0
 let userGameScore = 0
 let showHighlightTimeout
-let repeatPoints = [];
+let repeatRounds = [];
 
 
-let maxRepeatPoints = 4;
-// const maxRepeatPoints = Math.floor(maxRounds/nbackValue);
+let maxrepeatRounds = 5;
 
-
-// let keyHandler = (e) => {
-//     if (e.keyCode == 89) { // for y
-//         console.log("User pressed y for", userSelectNum);
-//         e.preventDefault();
-//         checkUserNback();
-//     }
-// }
-
-stopButton.disabled = true;
-startButton.disabled = false;
-
-// Generate a number between 1 and 9
-function randomGenerator(minNum, maxNum) {
-    return Math.floor(Math.random() * (+maxNum - +minNum)) + +minNum;
+// Generate a number between minVal and maxVal
+function randomGenerator(minVal, maxVal) {
+    return Math.floor(Math.random()*(parseInt(maxVal) - parseInt(minVal)+1) + parseInt(minVal) );
+    // return Math.floor(Math.random() * (+maxVal - +minVal)) + +minVal;
 }
 
-// Generate repeat points
-function listRepeatPoints() {
-    for (let i = 0; i < maxRepeatPoints; i++) {
-        let randomNum = randomGenerator(nbackValue, maxRounds);
-        if (repeatPoints.includes(randomNum)) {
-            console.log(repeatPoints, `${randomNum} already available, recalculating`);
-            maxRepeatPoints++;
+// Generate the round numbers that will repeat
+function createRepeatList() {
+    for (let i = 0; i < maxrepeatRounds; i++) {
+        let randomNum = randomGenerator(nbackValue + 1, maxRounds);
+        console.log("Generated:", randomNum, "with", nbackValue , maxRounds);
+        if (repeatRounds.includes(randomNum)) {
+            maxrepeatRounds++;
             // try again with a new number to avoid duplicate place values
-        }
-
-        else {
-            repeatPoints.push(randomNum);
+        } else {
+            repeatRounds.push(randomNum);
         }
     }
-    console.log(maxRepeatPoints, repeatPoints);
+    console.log(`Max Repeat Points: ${maxrepeatRounds}, Repeat Points List: ${repeatRounds}`);
 }
 
-
-
-function showNewHighlight() {
+function showNewNumber() {
     removeHighlight();
-    let randomNum = randomGenerator(1, maxNum)  // Generate a random number between 1 and maxNum
-    if (repeatPoints.includes(currentRound)) {
-        userSelectNum = memoryCounter[currentRound - nbackValue]
-        console.log("repeating now", currentRound, memoryCounter, userSelectNum)
+
+    // If current round number is one that should repeat, then show the user the value from n rounds back
+    if (repeatRounds.includes(currentRound)) {
+        userSelectNum = memoryCounter[currentRound - nbackValue -1]
+        console.log(`Repeating Round - Round#: ${currentRound}, Numberlist: ${memoryCounter}, Current Number: ${userSelectNum}`)
     }
+    // Else show the user a random number
     else {
-        userSelectNum = randomNum;
-        console.log("not repeating", currentRound, memoryCounter, userSelectNum)
+        userSelectNum = randomGenerator(1, maxNum);
+        console.log(`Non - Repeating Round - Round#: ${currentRound}, Numberlist: ${memoryCounter}, Current Number: ${userSelectNum}`)
     }
+
     numberDisplay.innerHTML = userSelectNum;
-    // console.log("Square number highlighted is ", randomNum);
-    // highlightSquare(randomNum);
+    memoryCounter.push(userSelectNum);
 
 
     showHighlightTimeout = setTimeout(() => {
-        // removeHighlight(randomNum);
-        maxRounds--;
         currentRound++;
-        if (maxRounds) {
-            memoryCounter.push(userSelectNum); // Add the number to the memory counter
-            showNewHighlight();
+        if (currentRound < maxRounds) { // If there are still rounds left
+            showNewNumber();
         }
         else {
             stopGame();
@@ -86,15 +70,13 @@ function showNewHighlight() {
     }, showTimeoutVal);
 }
 
-function checkUserNback() {
-    console.log(memoryCounter);
-    let prevNbackValue = memoryCounter[memoryCounter.length - nbackValue]
+function validateUserRecall() {
+    let prevNbackValue = memoryCounter[memoryCounter.length -1 - nbackValue]
+    console.log(prevNbackValue, userSelectNum);
     if (userSelectNum === prevNbackValue) {
-        // userChoices.push(userSelectNum); // Add the correct selected number to a separate array
-        console.log("User got it right!");
         userGameScore++;
         successHighlight(userSelectNum)
-        alertBox.innerHTML += ` <p> Awesome! You got that right. Score: ${userGameScore}. </p>`
+        alertBox.innerHTML += ` <p> Success! Recalled ${userSelectNum} on turn ${currentRound}. Score: ${userGameScore}. </p>`
     }
     else {
         failHighlight(userSelectNum)
@@ -119,22 +101,23 @@ function removeHighlight() {
     numberDisplay.classList.remove("highlighted", "success", "fail");
 }
 
-
 function startNewGame() {
     startButton.disabled = true;
     stopButton.disabled = false;
-    repeatPoints = [];
+    recallButton.disabled = false;
 
-    listRepeatPoints()
+    repeatRounds = [];
+
+    createRepeatList()
 
     userGameScore = 0;
-    maxRounds = 20;
     memoryCounter = [];
+    currentRound = 1;
+
     alertBox.innerHTML = `<p> Starting the game with N = ${nbackValue}. </p> 
     (Press 'Y' for when you see the same box highlighted)`
     console.log(`Starting with nback=${nbackValue}`)
-    showNewHighlight();
-    userKeyEntry(); // Start listening for user keypresses
+    showNewNumber();
 }
 
 function stopGame() {
@@ -149,7 +132,9 @@ function stopGame() {
         if(i==0){
             html += ` ${memoryCounter[i]}`;
         }
-        html += `, ${memoryCounter[i]}`;
+        else{
+            html += `, ${memoryCounter[i]}`;
+        }
     } 
     alertBox.innerHTML += html + ' ]';
 
@@ -158,31 +143,27 @@ function stopGame() {
 
     startButton.disabled = false;
     stopButton.disabled = true;
-    window.removeEventListener("keydown", keyHandler, true);
-}
-
-
-function userKeyEntry() {
-    console.log("Listening for keypress");
-    window.addEventListener('keydown', keyHandler, false)
+    recallButton.disabled = true;
 }
 
 function setNbackValue() {
     let nbackSelect = document.getElementById("nbackSelect")
-    nbackValue = nbackSelect.options[nbackSelect.selectedIndex].value;
+    nbackValue = parseInt(nbackSelect.options[nbackSelect.selectedIndex].value);
     console.log(`nback value changed to ${nbackValue}`)
     initialize()
 }
 
-// startNewGame();
-
-
 function initialize() {
+    recallButton.disabled = true;
+    stopButton.disabled = true;
+    startButton.disabled = false;
+
     alertBox.innerHTML = "<h3> Choose 'N' and press START to play </h3>" + `Instructions: <br>
-     <p> Press the RECALL! button when the number currently shown is what you saw ${nbackValue} rounds ago. <p>
+     <p> Press the RECALL! button when the number currently shown is what you saw ${nbackValue} round(s) ago. <p>
      (You get ${maxRounds} rounds total)`;
 }
 
-initialize()
 
-// listRepeatPoints(maxRepeatPoints)
+
+// Runs on page load
+initialize()

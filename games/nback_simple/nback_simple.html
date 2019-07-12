@@ -13,14 +13,15 @@
 </head>
 
 <body class="bg-dark-gray near-white">
-        <div class="navbar flex flex-row align-items-center justify-center">
-                <a href="../../index.html" class="pointer mr-auto"> <img height="40px" width="40px" src="../../back.png" alt="Back to Home"> </a>
-                <div class="header-title">
-                    <div class="f2 ml-auto mr2">N-Back (Numbers)</div>
-                </div>
-            </div>
+    <div class="navbar flex flex-row align-items-center justify-center">
+        <a href="../../index.html" class="pointer mr-auto"> <img height="40px" width="40px" src="../../back.png"
+                alt="Back to Home"> </a>
+        <div class="header-title">
+            <div class="f2 ml-auto mr2">N-Back (Numbers)</div>
+        </div>
+    </div>
 
-    <div class="grid-container tc mv4">
+    <div class="grid-container tc mv3">
 
         <div class="nback-selection mv3" onchange="setNbackValue()">
             <select id="nbackSelect">
@@ -41,23 +42,11 @@
         </div>
 
         <div class="ma3">
-            <a id="recallButton" class="f3 link dim ph3 pv3 mb2 dib white bg-dark-green pointer"
-                onclick="checkUserNback()"> RECALL! </a>
+            <button id="recallButton" class="f2 ph4 pv3 mb2 dib white bg-dark-green"
+                onclick="validateUserRecall()"> RECALL! </button>
         </div>
-
-        <!-- <div class="grid">
-            <div id="cell-1" class="cell"></div>
-            <div id="cell-2" class="cell"></div>
-            <div id="cell-3" class="cell"></div>
-            <div id="cell-4" class="cell"></div>
-            <div id="cell-5" class="cell"></div>
-            <div id="cell-6" class="cell"></div>
-            <div id="cell-7" class="cell"></div>
-            <div id="cell-8" class="cell"></div>
-            <div id="cell-9" class="cell"></div>
-        </div> -->
-
-        <div id="alertBox" class="bg-light-gray dark-gray mv3 pa3">
+        
+        <div id="alertBox" class="bg-light-gray dark-gray mv3 pv2 ph3">
 
         </div>
 
