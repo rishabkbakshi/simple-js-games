@@ -13,6 +13,10 @@ let userSquareNum = 0
 let userGameScore = 0
 let showHighlightTimeout
 
+function userKeyEntry() {
+    console.log("Listening for keypress");
+    window.addEventListener('keydown', keyHandler, false)
+}
 let keyHandler = (e) => {
     if (e.keyCode == 89) { // for y
         console.log("User pressed y");
@@ -119,10 +123,7 @@ function stopGame(){
 }
 
 
-function userKeyEntry() {
-    console.log("Listening for keypress");
-    window.addEventListener('keydown', keyHandler, false)
-}
+
 
 function setNbackValue(){
     let nbackSelect = document.getElementById("nbackSelect")

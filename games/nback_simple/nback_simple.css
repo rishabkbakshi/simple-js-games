@@ -2,6 +2,7 @@ html, body{
     height: 100vh;
     width: 100vw;
     font-family: 'Lato', sans-serif;
+    overflow-x: hidden;
 }
 
 button:disabled {
@@ -94,3 +95,4 @@ button:disabled {
     min-width: 150px;
     max-width: 200px;
   }
+

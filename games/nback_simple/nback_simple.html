@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=Staatliches" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    
+
 </head>
 
 <body class="bg-dark-gray near-white">
@@ -43,7 +46,7 @@
 
         <div class="ma3">
             <button id="recallButton" class="f2 ph4 pv3 mb2 dib white bg-dark-green"
-                onclick="validateUserRecall()"> RECALL! </button>
+                onclick="onRecall()"> RECALL! </button>
         </div>
         
         <div id="alertBox" class="bg-light-gray dark-gray mv3 pv2 ph3">
@@ -55,10 +58,12 @@
             <button id="stopGame" class="mh2" onclick="stopGame()"> STOP GAME</button>
         </div>
 
+        <canvas id="scoreChart" width="400" height="400"></canvas>
+
         <!-- <div class="container-bottom mv3"> Made by Rishab Bakshi </div> -->
     </div>
-    <script src="nback_simple.js">
-    </script>
+    <script src="nback_simple.js"></script>
+
 </body>
 
 </html>
