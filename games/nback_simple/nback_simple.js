@@ -28,6 +28,7 @@ let nextLetterTimeout
 let repeatRounds = [];
 let progressCircle
 let maxrepeatRounds = 5;
+let gameActive = false;
 
 
 // const ProgressBar = require('progressbar.js')
@@ -147,6 +148,7 @@ function startNewGame() {
     startButton.disabled = true;
     stopButton.disabled = false;
     recallButton.disabled = false;
+    gameActive = true;
 
     repeatRounds = [];
 
@@ -168,7 +170,7 @@ function stopGame() {
     removeHighlight()
     progressCircle.animate(1);
 
-    statsDisplay.innerHTML = `<h3> GAME OVER </h3> <br> Final Score: ${userGameScore} <br> <br> Success Percentage: ${userGameScore/totalRepeats * 100}% <br> <br>`;
+    statsDisplay.innerHTML = `Final Score: ${userGameScore} <br> <br> Success Percentage: ${userGameScore/totalRepeats * 100}% <br> <br>`;
     var html = 'Number Series:' + '<br> [';
     for (var i = 0; i < memoryCounter.length - 1 ; i++) {
         if (i == 0) {
@@ -188,6 +190,7 @@ function stopGame() {
     recallButton.disabled = true;
 
     numberDisplay.innerHTML = `<div style="font-size: 30px; margin-top:60px;"> GAME <br> OVER </div>`
+    gameActive = false;
 }
 
 function setNbackValue() {
@@ -201,6 +204,7 @@ function initialize() {
     recallButton.disabled = true;
     stopButton.disabled = true;
     startButton.disabled = false;
+    gameActive = false;
 
     alertBox.innerHTML =`<h3> Instructions: </h3>
      <p> Press the "RECALL!" button or the "<" button on your controller when the letter currently shown is what you saw ${nbackValue} round(s) ago. (Based on n you selected) <p>
@@ -262,9 +266,10 @@ function initialize() {
 // function userKeyEntry() {
 window.addEventListener('keydown', keyHandler, false)
 // }
+
 function keyHandler(e) {
     if (e.keyCode == 33) { // for PGUP or LEFT in the presenter
-        if(numberDisplay.innerHTML != " "){
+        if(gameActive){
             e.preventDefault();
             validateUserRecall();
         }
