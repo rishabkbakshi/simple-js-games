@@ -14,7 +14,7 @@ button:disabled {
   background: rgba(0,0,0,0.1);
   padding: 10px 10px; 
   top: 0;
-  width: 100vw;
+  width: 100%;
 }
 
 .header-title{
@@ -66,6 +66,13 @@ button:disabled {
   height: 200px;
   width: 200px;
   margin: 0 auto;
+  position: relative;
+}
+
+.main-display > svg{
+  position: absolute;
+  top: 0;
+  color: #e2e2e2;
 }
 
 .display-text{
@@ -76,10 +83,29 @@ button:disabled {
   
 .success{
     background: #64f38c !important;
+    border-radius:100% !important;
 }
 .fail{
     background: #f85032 !important;
+    border-radius:100% !important;
 }
+
+#statsDisplay{
+  /* margin-left: auto; */
+  text-align: left;
+  padding: 20px 30px;
+}
+
+.results-box{
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#scoreChart{
+  height: 200px !important;
+  width: 200px !important;
+}
+
 
   @keyframes createBox {
     from {

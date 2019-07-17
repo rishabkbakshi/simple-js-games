@@ -2,11 +2,15 @@ const maxNum = 9; // Maximum number to count until
 const highlightColor = "#f00";  // Color of the highlighted square
 const showTimeoutVal = 2500; // In milliseconds
 const alertBox = document.getElementById("alertBox");
+const statsDisplay = document.getElementById('statsDisplay');
 const startButton = document.getElementById("startNewGame");
 const stopButton = document.getElementById("stopGame");
 const recallButton = document.getElementById("recallButton");
+
 const numberDisplay = document.getElementById("numberDisplay");
-const scoreChart = document.getElementById("scoreChart")
+// const chartCanvas = document.getElementById("scoreChart").getContext('2d')
+// let scoreChart
+
 
 const upperAlphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 const lowerAlphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
@@ -18,12 +22,25 @@ let memoryCounter = []
 let userChoices = []
 let userSelectNum = 0
 let userGameScore = 0
+let totalRepeats = 0;
 let showHighlightTimeout
 let nextLetterTimeout
 let repeatRounds = [];
-
-
+let progressCircle
 let maxrepeatRounds = 5;
+
+
+// const ProgressBar = require('progressbar.js')
+window.onload = function onLoad() {
+    progressCircle = new ProgressBar.Circle('.main-display',{
+        strokeWidth:4,
+        color: '#eee'
+    });
+
+    progressCircle.animate(1);
+
+    // generateChart()
+};
 
 // Generate a number between minVal and maxVal
 function randomGenerator(minVal, maxVal, letterArr) {
@@ -54,13 +71,19 @@ function showNewNumber() {
     if (repeatRounds.includes(currentRound)) {
         userSelectNum = memoryCounter[currentRound - nbackValue - 1]
         console.log(`Repeating Round - Round#: ${currentRound}, Numberlist: ${memoryCounter}, Current Number: ${userSelectNum}`)
+        totalRepeats++;
     }
     // Else show the user a random number
     else {
         userSelectNum = randomGenerator(1, maxNum, upperAlphabet);
         console.log(`Non - Repeating Round - Round#: ${currentRound}, Numberlist: ${memoryCounter}, Current Number: ${userSelectNum}`)
+
+        if(userSelectNum === memoryCounter[currentRound - nbackValue - 1]){
+            totalRepeats++
+        }
     }
 
+    progressCircle.animate(currentRound / maxRounds);
     numberDisplay.innerHTML = userSelectNum;
 
     memoryCounter.push(userSelectNum);
@@ -72,6 +95,7 @@ function showNewNumber() {
 
         nextLetterTimeout = setTimeout(() => {
             currentRound++;
+
             if (currentRound < maxRounds) { // If there are still rounds left
                 showNewNumber();
             }
@@ -95,7 +119,6 @@ function validateUserRecall() {
     if (userSelectNum === prevNbackValue) {
         userGameScore++;
         successHighlight(userSelectNum)
-        alertBox.innerHTML += ` <p> Success! Recalled ${userSelectNum} on turn ${currentRound}. Score: ${userGameScore}. </p>`
     }
     else {
         failHighlight(userSelectNum)
@@ -132,10 +155,9 @@ function startNewGame() {
     userGameScore = 0;
     memoryCounter = [];
     currentRound = 1;
+    totalRepeats = 0;
 
-    alertBox.innerHTML = `<p> Starting the game with N = ${nbackValue}. </p> 
-    (Press 'Y' for when you see the same box highlighted)`
-    console.log(`Starting with nback=${nbackValue}`)
+    statsDisplay.innerHTML = `Final Score: ${userGameScore} <br> <br> Success Percentage: 0%<br> <br>`;
     showNewNumber();
 }
 
@@ -144,11 +166,11 @@ function stopGame() {
     clearTimeout(showHighlightTimeout);
     memoryCounter.push(userSelectNum);
     removeHighlight()
+    progressCircle.animate(1);
 
-    alertBox.innerHTML += "<h3> GAME OVER </h3>" + `<p> Your final Score: ${userGameScore} </p>`;
-
-    var html = 'Number Series: [';
-    for (var i = 0; i < memoryCounter.length; i++) {
+    statsDisplay.innerHTML = `<h3> GAME OVER </h3> <br> Final Score: ${userGameScore} <br> <br> Success Percentage: ${userGameScore/totalRepeats * 100}% <br> <br>`;
+    var html = 'Number Series:' + '<br> [';
+    for (var i = 0; i < memoryCounter.length - 1 ; i++) {
         if (i == 0) {
             html += ` ${memoryCounter[i]}`;
         }
@@ -156,14 +178,16 @@ function stopGame() {
             html += `, ${memoryCounter[i]}`;
         }
     }
-    alertBox.innerHTML += html + ' ]';
+    statsDisplay.innerHTML += html + ' ]';
+    numberDisplay.innerHTML = " ";
 
     console.log(`Game Over. User Score is ${userGameScore}`);
-    alertBox.scrollTop = alertBox.scrollHeight;
 
     startButton.disabled = false;
     stopButton.disabled = true;
     recallButton.disabled = true;
+
+    numberDisplay.innerHTML = `<div style="font-size: 30px; margin-top:60px;"> GAME <br> OVER </div>`
 }
 
 function setNbackValue() {
@@ -178,38 +202,67 @@ function initialize() {
     stopButton.disabled = true;
     startButton.disabled = false;
 
-    alertBox.innerHTML = "<h3> Choose 'N' and press START to play </h3>" + `Instructions: <br>
-     <p> Press the RECALL! button when the number currently shown is what you saw ${nbackValue} round(s) ago. <p>
+    alertBox.innerHTML =`<h3> Instructions: </h3>
+     <p> Press the "RECALL!" button or the "<" button on your controller when the letter currently shown is what you saw ${nbackValue} round(s) ago. (Based on n you selected) <p>
      (You get ${maxRounds} rounds total)`;
+
+    statsDisplay.innerHTML = `Final Score: 0 <br><br> Success Percentage: 0%`;
+
+    numberDisplay.innerHTML = `<div style="font-size: 30px; margin-top:60px;"> NEW <br> GAME </div>`
 }
 
-function generateChart() {
+// function generateChart() {
 
-    let data = {
-        datasets: [{
-            data: [2, 3]
-        }],
+//     let data = {
+//         datasets: [{
+//             data: [0,1],
+//             backgroundColor: [
+//                 '#eee',
+//                 '#333',
+//             ],
+//             borderWidth: 4
+//         }],
 
-        // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: [
-            'Red',
-            'Yellow',
-            'Blue'
-        ]
-    }
-    const scoreChart = new Chart(scoreChart, {
-        type: 'pie',
-        data: [2, 3],
-        options: options
-    });
-}
+//         // These labels appear in the legend and in the tooltips when hovering different arcs
+//         // labels: [
+//         //     'Correct',
+//         //     'Incorrect'
+//         // ]
+//     }
+
+//     scoreChart = new Chart(chartCanvas, {
+//         type: 'pie',
+//         data: data,
+//         options: {
+//             // legend: true,
+//             // tooltips:{
+//             //     titleFontSize: '140',
+//             //     bodyFontSize: '30',
+//             //     xPadding: '10',
+//             //     yPadding:'10'
+//             // }
+//             // elements: {
+//             //     arc: {
+//             //         borderWidth: 4
+//             //     }
+//             // }
+//         }
+//     });
+//     // Chart.defaults.global.elements.rectangle.borderWidth = 2;
+// }
+
+// function updateChart(){
+//     scoreChart.data.datasets.forEach((dataset) => {
+//         dataset.data = [userGameScore, totalRepeats - userGameScore]
+//     });
+//     scoreChart.update();
+// }
 
 
 // function userKeyEntry() {
 window.addEventListener('keydown', keyHandler, false)
 // }
 function keyHandler(e) {
-    console.log(e.keyCode)
     if (e.keyCode == 33) { // for PGUP or LEFT in the presenter
         if(numberDisplay.innerHTML != " "){
             e.preventDefault();
@@ -229,6 +282,7 @@ function keyHandler(e) {
 }
 
 
+
+
 // Runs on page load
 initialize()
-// generateChart()
