@@ -15,7 +15,7 @@ const numberDisplay = document.getElementById("numberDisplay");
 const upperAlphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 const lowerAlphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
-const maxRounds = 20
+const maxRounds = 27
 let currentRound = 1
 let nbackValue = 2
 let memoryCounter = []
@@ -27,14 +27,15 @@ let showHighlightTimeout
 let nextLetterTimeout
 let repeatRounds = [];
 let progressCircle
-let maxrepeatRounds = 5;
+let maxrepeatRounds = 7;
 let gameActive = false;
-
+let userSelected = false;
+let userSelectSuccess = false;
 
 // const ProgressBar = require('progressbar.js')
 window.onload = function onLoad() {
-    progressCircle = new ProgressBar.Circle('.main-display',{
-        strokeWidth:4,
+    progressCircle = new ProgressBar.Circle('.main-display', {
+        strokeWidth: 4,
         color: '#eee'
     });
 
@@ -79,7 +80,7 @@ function showNewNumber() {
         userSelectNum = randomGenerator(1, maxNum, upperAlphabet);
         console.log(`Non - Repeating Round - Round#: ${currentRound}, Numberlist: ${memoryCounter}, Current Number: ${userSelectNum}`)
 
-        if(userSelectNum === memoryCounter[currentRound - nbackValue - 1]){
+        if (userSelectNum === memoryCounter[currentRound - nbackValue - 1]) {
             totalRepeats++
         }
     }
@@ -89,18 +90,24 @@ function showNewNumber() {
 
     memoryCounter.push(userSelectNum);
 
-
     showHighlightTimeout = setTimeout(() => {
         numberDisplay.innerHTML = " ";
         removeHighlight();
 
         nextLetterTimeout = setTimeout(() => {
+            // If user did not select anything in previous round calculate score
+            if (!userSelected) {
+                calculateUserScore()
+            }
+            userSelected = false;
             currentRound++;
-
             if (currentRound < maxRounds) { // If there are still rounds left
                 showNewNumber();
+                recallButton.disabled = false;
             }
             else {
+                currentRound--;
+                console.log("Ending game with ", currentRound)
                 stopGame();
             }
         }, 1000)
@@ -108,28 +115,47 @@ function showNewNumber() {
     }, showTimeoutVal);
 }
 
-function onRecall(){
-    if(numberDisplay.innerHTML != " "){
-        validateUserRecall();
-    }
-}
-
-function validateUserRecall() {
+function calculateUserScore() {
     let prevNbackValue = memoryCounter[memoryCounter.length - 1 - nbackValue]
     console.log(prevNbackValue, userSelectNum);
-    if (userSelectNum === prevNbackValue) {
-        userGameScore++;
-        successHighlight(userSelectNum)
-    }
-    else {
-        failHighlight(userSelectNum)
-        console.log(`Wrong! Your choice: ${userSelectNum}, Previous nback value: ${prevNbackValue} `)
+    // Start scoring after round 1
+    if (currentRound > 1) {
+        // When user does not select anything
+        if (!userSelected) {
+            // When it was an nback
+            if (userSelectNum === prevNbackValue) {
+                console.log(`Round ${currentRound}: [FAILED] There was an nback value`)
+            }
+            // When it was not an nback
+            else {
+                userGameScore++
+                console.log(`Round ${currentRound}: [SUCCESS] There was no nback value`)
+            }
+        }
+        // When user makes a selection   
+        else if (userSelected) {
+            // When user selects and gets it right
+            if (userSelectNum === prevNbackValue) {
+                userGameScore++
+                successHighlight(userSelectNum)
+                console.log(`Round ${currentRound}: [SUCCESS] User selected an nback value`)
+            }
+            // When user selects and doesnot get it right
+            else {
+                failHighlight(userSelectNum)
+                console.log(`Round ${currentRound}: [FAILED] User selected an NON nback value`)
+                console.log(`Wrong! Your choice: ${userSelectNum}, Previous nback value: ${prevNbackValue} `)
+            }
+        }
     }
 }
 
-function highlightSquare(squareNumber) {
-    let element = document.getElementById(`cell-${squareNumber}`);
-    element.classList.add("highlighted");
+function onRecall() {
+    userSelected = true;
+    recallButton.disabled = true;
+    if (numberDisplay.innerHTML != " ") {
+        calculateUserScore();
+    }
 }
 
 function successHighlight() {
@@ -149,7 +175,8 @@ function startNewGame() {
     stopButton.disabled = false;
     recallButton.disabled = false;
     gameActive = true;
-
+    userSelected = false;
+    maxrepeatRounds = 5
     repeatRounds = [];
 
     createRepeatList()
@@ -166,13 +193,14 @@ function startNewGame() {
 function stopGame() {
     clearTimeout(nextLetterTimeout);
     clearTimeout(showHighlightTimeout);
+    // if (!userSelected) {calculateUserScore()} 
     memoryCounter.push(userSelectNum);
     removeHighlight()
     progressCircle.animate(1);
 
-    statsDisplay.innerHTML = `Final Score: ${userGameScore} <br> <br> Success Percentage: ${userGameScore/totalRepeats * 100}% <br> <br>`;
+    statsDisplay.innerHTML = `Final Score: ${userGameScore} <br> <br> Success Percentage: ${userGameScore / (currentRound -1) * 100}% <br> <br>`;
     var html = 'Number Series:' + '<br> [';
-    for (var i = 0; i < memoryCounter.length - 1 ; i++) {
+    for (var i = 0; i < memoryCounter.length - 1; i++) {
         if (i == 0) {
             html += ` ${memoryCounter[i]}`;
         }
@@ -180,7 +208,7 @@ function stopGame() {
             html += `, ${memoryCounter[i]}`;
         }
     }
-    statsDisplay.innerHTML += html + ' ]';
+    statsDisplay.innerHTML += html + ' ]' + ` \t ---> ${(currentRound - 1)}  \t round(s)`;
     numberDisplay.innerHTML = " ";
 
     console.log(`Game Over. User Score is ${userGameScore}`);
@@ -206,7 +234,7 @@ function initialize() {
     startButton.disabled = false;
     gameActive = false;
 
-    alertBox.innerHTML =`<h3> Instructions: </h3>
+    alertBox.innerHTML = `<h3> Instructions: </h3>
      <p> Press the "RECALL!" button or the "<" button on your controller when the letter currently shown is what you saw ${nbackValue} round(s) ago. (Based on n you selected) <p>
      (You get ${maxRounds} rounds total)`;
 
@@ -268,13 +296,14 @@ window.addEventListener('keydown', keyHandler, false)
 // }
 
 function keyHandler(e) {
-    if (e.keyCode == 33) { // for PGUP or LEFT in the presenter
-        if(gameActive){
+    if (e.keyCode === 33) { // for PGUP or LEFT in the presenter
+        if (gameActive) {
             e.preventDefault();
-            validateUserRecall();
+            userSelected = true;
+            calculateUserScore();
         }
     }
-    else if (e.keyCode == 66) { // for b or STOP in the presenter
+    else if (e.keyCode === 66) { // for b or STOP in the presenter
         e.preventDefault();
         if (startButton.disabled === false) {
             console.log("Starting game")
